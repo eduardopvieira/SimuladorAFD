@@ -17,7 +17,7 @@ public class Testes {
             String cadeia = sc.nextLine();
 
             if (cadeia.equals("sair")) {
-                System.out.println("Saindo do simulador.");
+                System.out.println("Encerrando");
                 break;
             }
 
@@ -25,7 +25,7 @@ public class Testes {
             if (resultado) {
                 System.out.println("Cadeia reconhecida!");
             } else {
-                System.out.println("Cadeia não reconhecida.");
+                System.out.println("Cadeia não reconhecida!");
             }
         }
         sc.close();

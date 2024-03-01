@@ -12,26 +12,25 @@ public class AFD {
     private int[][] tabelaTransicoes;
 
     public AFD(){}
-    public AFD(int qtdEstados, char[] alfabeto, int estadoInicial, int[] estadosAceitacao, int[][] tabelaTransicoes) {
-        this.qtdEstados = qtdEstados;
-        this.alfabeto = alfabeto;
-        this.estadoInicial = estadoInicial;
+    public AFD(int qtdEstados, char[] alfabeto, int estadoInicial, int[] estadosAceitacao, int[][] tabelaTransicoes) throws MyException {
+        setQtdEstados(qtdEstados);
+        setAlfabeto(alfabeto);
+        setEstadoInicial(estadoInicial);
         this.estadosAceitacao = estadosAceitacao;
         this.tabelaTransicoes = tabelaTransicoes;
+        setEstadoAtual(estadoInicial);
     }
 
 
 
 
 //=========================Get e Set alfabeto===========================
-    public char[] getAlfabeto () {
+    public char[] getAlfabeto() {
         return alfabeto;
     }
 
     public void setAlfabeto ( char[] alfabeto){
-        if (alfabeto.length > 0 && alfabeto.length < 2) {
-            this.alfabeto = alfabeto;
-        }
+        this.alfabeto = alfabeto;
     }
 //=========================Get e Set QTD Estados===========================
     public int getQtdEstados () {
@@ -41,6 +40,8 @@ public class AFD {
     public void setQtdEstados ( int qtdEstados) throws MyException {
         if (qtdEstados > 0) {
             this.qtdEstados = qtdEstados;
+        } else {
+            throw new MyException("Quantidade de estados nao pode ser menor que 0");
         }
     }
 //=========================Get e Set Estado Inicial===========================
