@@ -11,12 +11,12 @@ public class Testes {
         AFD afd = simu.lerDetalhesAFD();
 
 
-        System.out.println("Digite uma cadeia para ser reconhecida (digite 'sair' para sair):");
+        System.out.println("Digite uma cadeia para ser reconhecida (digite '.' para encerrar os testes):");
 
         while (true) {
             String cadeia = sc.nextLine();
 
-            if (cadeia.equals("sair")) {
+            if (cadeia.equals(".")) {
                 System.out.println("Encerrando");
                 break;
             }

@@ -22,8 +22,6 @@ public class AFD {
     }
 
 
-
-
 //=========================Get e Set alfabeto===========================
     public char[] getAlfabeto() {
         return alfabeto;
