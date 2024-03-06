@@ -1,5 +1,7 @@
 package Classes;
 import Exception.MyException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class SimulacaoAFD {
@@ -7,12 +9,13 @@ public class SimulacaoAFD {
     public AFD lerDetalhesAFD() {
         Scanner scanner = new Scanner(System.in);
 
+
         // ============ DEFININDO ESTADOS DO AFD =============
         System.out.print("Digite a quantidade de estados: ");
         int qtdEstados = scanner.nextInt();
 
-        // =========== DEFININDO O ALFABETO ===========
         scanner.nextLine(); // serve pra limpar o buffer, nao tirar
+        // =========== DEFININDO O ALFABETO ===========
         System.out.print("Digite o alfabeto (sem nenhuma separação entre os símbolos) ");
         String alfabetoString = scanner.nextLine();
         char[] alfabeto = alfabetoString.toCharArray();
@@ -56,24 +59,29 @@ public class SimulacaoAFD {
 
     public boolean simularAFD(String cadeia, AFD afd) {
         int estadoAtual = afd.getEstadoAtual();
+        Map<Character, Integer> mapaAlfabeto = new HashMap<>();
+
+        //Mapeando os valores das letras num hashmap, evitando que simbolos repetidos existam
+        for (int i = 0; i < afd.getAlfabeto().length; i++) {
+            mapaAlfabeto.put(afd.getAlfabeto()[i], i);
+        }
 
         //repete pra cada simbolo dentro da cadeia enviada pelo usuario
         for (int i = 0; i < cadeia.length(); i++) {
             char simbolo = cadeia.charAt(i);
             int indiceSimbolo = -1; //Caso o símbolo esteja na cadeia, esse índice vai ser alterado. se não alterar, vai interromper
 
-            //verifica se a letra está dentro do alfabeto. se estiver, o indice é trocado pelo seu indice correspondente no array.
-            //esse indice também é o indice correspondente na matriz da tabela de transiçoes
+           //verifica se a letra ta dentro do alfabeto
             for (int j = 0; j < afd.getAlfabeto().length; j++) {
-                if (simbolo == afd.getAlfabeto()[j]) {
-                    indiceSimbolo = j;
+                if (mapaAlfabeto.containsKey(simbolo)) {
+                    indiceSimbolo = mapaAlfabeto.get(simbolo);
                     break;
                 }
             }
 
             //verifica se o simbolo está dentro da cadeia
             if (indiceSimbolo == -1) {
-                System.out.println("Erro: símbolo inválido encontrado na cadeia.");
+                System.out.println("Erro: foi digitado algum simbolo que nao pertence a cadeia");
                 return false;
             }
 

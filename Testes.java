@@ -10,7 +10,6 @@ public class Testes {
         SimulacaoAFD simu = new SimulacaoAFD();
         AFD afd = simu.lerDetalhesAFD();
 
-
         System.out.println("Digite uma cadeia para ser reconhecida (digite '.' para encerrar os testes):");
 
         while (true) {
