@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class SimulacaoAFD {
 
     public AFD lerDetalhesAFD() {
-        Scanner scanner = new Scanner(System.in);
 
+        Scanner scanner = new Scanner(System.in);
 
         // ============ DEFININDO ESTADOS DO AFD =============
         System.out.print("Digite a quantidade de estados: ");
@@ -16,7 +16,7 @@ public class SimulacaoAFD {
 
         scanner.nextLine(); // serve pra limpar o buffer, nao tirar
         // =========== DEFININDO O ALFABETO ===========
-        System.out.print("Digite o alfabeto (sem nenhuma separação entre os símbolos) ");
+        System.out.print("Digite o alfabeto (sem nenhuma separação entre os símbolos): ");
         String alfabetoString = scanner.nextLine();
         char[] alfabeto = alfabetoString.toCharArray();
         int qtdSimbolos = alfabeto.length;
@@ -27,17 +27,17 @@ public class SimulacaoAFD {
         // =========== DEFININDO FUNCOES DE TRANSICAO ===========
         for (int i = 0; i < qtdEstados; i++) { //linhas correspondem a quantidade de estados
             for (int j = 0; j < alfabeto.length; j++) { //colunas correspondem ao tamanho do alfabeto
-                System.out.printf("Digite o estado de transição para quando " + i + " recebe " + alfabeto[j] + ": ");
+                System.out.print("Digite o estado de transição para quando " + i + " recebe " + alfabeto[j] + ": ");
                 tabelaTransicoes[i][j] = scanner.nextInt();
             }
         }
         // ============ DEFININDO O ESTADO INICIAL ============
-        System.out.println("Digite o estado inicial: ");
+        System.out.print("Digite o estado inicial: ");
         int estadoInicial = scanner.nextInt();
 
         // =========== DEFININDO ESTADOS DE ACEITACAO ===========
         scanner.nextLine(); // serve pra limpar o buffer, nao tirar
-        System.out.print("Digite o(s) estado(s) de aceitação (separado por espaços)");
+        System.out.print("Digite o(s) estado(s) de aceitação (separado por espaços): ");
         String strEstadosAceitacao = scanner.nextLine();
         String[] pivo = strEstadosAceitacao.split(" ");
 
@@ -57,8 +57,10 @@ public class SimulacaoAFD {
 
 
 
+
     public boolean simularAFD(String cadeia, AFD afd) {
-        int estadoAtual = afd.getEstadoAtual();
+
+        int estadoAtual = afd.getEstadoInicial();
         Map<Character, Integer> mapaAlfabeto = new HashMap<>();
 
         //Mapeando os valores das letras num hashmap, evitando que simbolos repetidos existam
@@ -72,25 +74,20 @@ public class SimulacaoAFD {
             int indiceSimbolo = -1; //Caso o símbolo esteja na cadeia, esse índice vai ser alterado. se não alterar, vai interromper
 
            //verifica se a letra ta dentro do alfabeto
-            for (int j = 0; j < afd.getAlfabeto().length; j++) {
-                if (mapaAlfabeto.containsKey(simbolo)) {
-                    indiceSimbolo = mapaAlfabeto.get(simbolo);
-                    break;
-                }
-            }
-
-            //verifica se o simbolo está dentro da cadeia
-            if (indiceSimbolo == -1) {
-                System.out.println("Erro: foi digitado algum simbolo que nao pertence a cadeia");
+            if (mapaAlfabeto.containsKey(simbolo)) {
+                indiceSimbolo = mapaAlfabeto.get(simbolo);
+            } else {
+                System.out.println("Foi digitado um símbolo não pertencente a cadeia.");
                 return false;
             }
 
+            //Altera o estado atual.
             estadoAtual = afd.getTabelaTransicoes()[estadoAtual][indiceSimbolo];
             System.out.println("Você está no estado " + estadoAtual);
         }
 
-        for (int estado : afd.getEstadosAceitacao()) {
-            if (estado == estadoAtual) {
+        for (int estadoAceitacao : afd.getEstadosAceitacao()) {
+            if (estadoAceitacao == estadoAtual) {
                 return true;
             }
         }
